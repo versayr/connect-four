@@ -1,6 +1,10 @@
 .App {
   display: flex;
   flex-direction: row;
+  width: fit-content;
+  background: lightgray;
+  padding: 20px;
+  margin: 30px auto;
 }
 
 .column {
@@ -9,10 +13,11 @@
 }
 
 .cell {
-  height: 50px;
-  width: 50px;
-  border: 1px solid black;
+  margin: 7px;
+  height: 60px;
+  width: 60px;
   border-radius: 50px;
+  background: white;
 }
 
 .cell.black {
