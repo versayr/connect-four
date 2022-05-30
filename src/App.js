@@ -1,25 +1,16 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { Column } from './components/Column';
 import './App.css';
 
-function App() {
+export default function App() {
+  const [board, setBoard] = useState(Array(7).fill().map(() => Array(7).fill('')));
+  const [player, setPlayer] = useState("red");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      {board.map((col, i) => {
+        return <Column key={`column${i}`} values={col} />
+      })}
+      </div>
   );
 }
-
-export default App;
