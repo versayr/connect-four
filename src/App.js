@@ -56,6 +56,7 @@ export default function App() {
           )
         })}
       </div>
+      <div className="gameBase" ></div>
       {winner.length
           ? <div className="gameInfo">
               <h1 className="announcement" >
