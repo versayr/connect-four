@@ -11,31 +11,35 @@ export default function App() {
   const [winner, setWinner] = useState('');
 
   useEffect(() => {
-    if (move > 49) setWinner("nobody");
-    if (move > 7) {
+    if (move > 49 && winner === '') setWinner("nobody");
+    if (move > 7 && winner === '') {
       if (checkForWinner(lastMove, board)) {
         setWinner(player === "red" ? "black" : "red");
       };
     }
-  }, [move, lastMove, board, player]);
+  }, [move, winner, lastMove, board, player]);
 
   const makeMove = (col) => {
     const tmp = board.slice();
-    if (move === 49) {
-      alert('Game is a draw!');
-    } else {
-      for (const row in tmp[col]) {
-        if (tmp[col][row] === '') {
-          tmp[col][row] = player;
-          setLastMove({ x: col, y: parseInt(row) });
-          break;
-        }
+    for (const row in tmp[col]) {
+      if (tmp[col][row] === '') {
+        tmp[col][row] = player;
+        setLastMove({ x: col, y: parseInt(row) });
+        break;
       }
-
-      setPlayer(player === "red" ? "black" : "red");
-      setMove(move + 1);
-      setBoard(tmp);
     }
+
+    setPlayer(player === "red" ? "black" : "red");
+    setMove(move + 1);
+    setBoard(tmp);
+  }
+
+  const resetGame = () => {
+    setBoard(Array(7).fill().map(() => Array(7).fill('')));
+    setPlayer("red");
+    setLastMove({ x: -1, y: -1 });
+    setMove(1);
+    setWinner('');
   }
 
   return (
@@ -60,6 +64,9 @@ export default function App() {
             </div>
           : null
       }
+      <div className="controls" >
+        <button className="reset btn" onClick={resetGame} >Reset Game</button>
+      </div>
     </div>
   );
 }
