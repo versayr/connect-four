@@ -8,12 +8,13 @@ export default function App() {
   const [player, setPlayer] = useState("red");
   const [lastMove, setLastMove] = useState({ x: -1, y: -1 });
   const [move, setMove] = useState(1);
+  const [winner, setWinner] = useState('');
 
   useEffect(() => {
+    if (move > 49) setWinner("nobody");
     if (move > 7) {
       if (checkForWinner(lastMove, board)) {
-        const winner = player === "red" ? "black" : "red";
-        console.log(winner, ' wins!');
+        setWinner(player === "red" ? "black" : "red");
       };
     }
   }, [move, lastMove, board, player]);
@@ -39,16 +40,26 @@ export default function App() {
 
   return (
     <div className="App">
-      {board.map((col, i) => {
-        return (
-          <Column 
-          key={`column${i}`} 
-          values={col} 
-          index={i}
-          makeMove={makeMove} 
-        />
-        )
-      })}
-        </div>
+      <div className="gameBoard" >
+        {board.map((col, i) => {
+          return (
+            <Column 
+            key={`column${i}`} 
+            values={col} 
+            index={i}
+            makeMove={makeMove} 
+          />
+          )
+        })}
+      </div>
+      {winner.length
+          ? <div className="gameInfo">
+              <h1 className="announcement" >
+                {`${winner} has won`}
+              </h1>
+            </div>
+          : null
+      }
+    </div>
   );
 }
