@@ -20,18 +20,20 @@ export default function App() {
   }, [move, winner, lastMove, board, player]);
 
   const makeMove = (col) => {
-    const tmp = board.slice();
-    for (const row in tmp[col]) {
-      if (tmp[col][row] === '') {
-        tmp[col][row] = player;
-        setLastMove({ x: col, y: parseInt(row) });
-        break;
+    if (!winner.length) {
+      const tmp = board.slice();
+      for (const row in tmp[col]) {
+        if (tmp[col][row] === '') {
+          tmp[col][row] = player;
+          setLastMove({ x: col, y: parseInt(row) });
+          break;
+        }
       }
-    }
 
-    setPlayer(player === "red" ? "black" : "red");
-    setMove(move + 1);
-    setBoard(tmp);
+      setPlayer(player === "red" ? "black" : "red");
+      setMove(move + 1);
+      setBoard(tmp);
+    }
   }
 
   const resetGame = () => {
@@ -46,25 +48,27 @@ export default function App() {
     <div className="App">
       <div className="gameBoard" >
         {board.map((col, i) => {
-          return (
-            <Column 
-            key={`column${i}`} 
-            values={col} 
-            index={i}
-            makeMove={makeMove} 
-          />
-          )
+          return <Column 
+          key={`column${i}`} 
+          values={col} 
+          index={i}
+          makeMove={makeMove} 
+        />
         })}
       </div>
       <div className="gameBase" ></div>
-      {winner.length
-          ? <div className="gameInfo">
-              <h1 className="announcement" >
+      <div className="gameInfo">
+        {
+          winner.length
+            ? <h1 className="announcement" >
                 {`${winner} has won`}
               </h1>
-            </div>
-          : null
-      }
+            : <div>
+                <p className="moveInfo" >move number {move} is:</p>
+                <p className="nextPlayer" >{player} player</p>
+              </div>
+        }
+      </div>
       <div className="controls" >
         <button className="reset btn" onClick={resetGame} >Reset Game</button>
       </div>

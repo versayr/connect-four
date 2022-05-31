@@ -26,6 +26,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .controls {
@@ -69,4 +76,12 @@
 
 .reset {
   background: lightgray;
+}
+
+.moveInfo {
+  text-transform: uppercase;
+}
+
+.nextPlayer {
+  text-transform: uppercase;
 }
