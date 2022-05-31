@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Column } from './components/Column';
 import { checkForWinner } from './utils';
 import './App.css';
@@ -9,6 +9,15 @@ export default function App() {
   const [lastMove, setLastMove] = useState({ x: -1, y: -1 });
   const [move, setMove] = useState(1);
 
+  useEffect(() => {
+    if (move > 7) {
+      if (checkForWinner(lastMove, board)) {
+        const winner = player === "red" ? "black" : "red";
+        console.log(winner, ' wins!');
+      };
+    }
+  }, [move, lastMove, board, player]);
+
   const makeMove = (col) => {
     const tmp = board.slice();
     if (move === 49) {
@@ -17,6 +26,7 @@ export default function App() {
       for (const row in tmp[col]) {
         if (tmp[col][row] === '') {
           tmp[col][row] = player;
+          setLastMove({ x: col, y: parseInt(row) });
           break;
         }
       }
@@ -25,7 +35,6 @@ export default function App() {
       setMove(move + 1);
       setBoard(tmp);
     }
-
   }
 
   return (
